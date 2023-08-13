@@ -30,7 +30,7 @@ GLUE is made up of a total of 9 different tasks. Here is how to run the script o
 ```bash
 export TASK_NAME=mrpc
 
-python run_glue.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_glue.py \
   --model_name_or_path bert-base-cased \
   --task_name $TASK_NAME \
   --do_train \
@@ -40,6 +40,7 @@ python run_glue.py \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
   --output_dir /tmp/$TASK_NAME/
+  --torch_compile True
 ```
 
 where task name can be one of cola, sst2, mrpc, stsb, qqp, mnli, qnli, rte, wnli.
@@ -67,7 +68,7 @@ website. For QQP and WNLI, please refer to [FAQ #12](https://gluebenchmark.com/f
 The following example fine-tunes BERT on the `imdb` dataset hosted on our [hub](https://huggingface.co/datasets):
 
 ```bash
-python run_glue.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1  python run_glue.py \
   --model_name_or_path bert-base-cased \
   --dataset_name imdb  \
   --do_train \
@@ -77,6 +78,7 @@ python run_glue.py \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
   --output_dir /tmp/imdb/
+  --torch_compile True
 ```
 
 > If your model classification head dimensions do not fit the number of labels in the dataset, you can specify `--ignore_mismatched_sizes` to adapt it.
@@ -89,7 +91,7 @@ We can specify the metric, the label column and aso choose which text columns to
 ```bash
 dataset="amazon_reviews_multi"
 subset="en"
-python run_classification.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1  python run_classification.py \
     --model_name_or_path  bert-base-uncased \
     --dataset_name ${dataset} \
     --dataset_config_name ${subset} \
@@ -105,6 +107,7 @@ python run_classification.py \
     --learning_rate 2e-5 \
     --num_train_epochs 1 \
     --output_dir /tmp/${dataset}_${subset}/
+    --torch_compile True
 ```
 Training for 1 epoch results in acc of around 0.5958 for review_body only and 0.659 for title+body+category.
 
@@ -112,7 +115,7 @@ The following is a multi-label classification example. It fine-tunes BERT on the
 ```bash
 dataset="reuters21578"
 subset="ModApte"
-python run_classification.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_classification.py \
     --model_name_or_path bert-base-uncased \
     --dataset_name ${dataset} \
     --dataset_config_name ${subset} \
@@ -127,7 +130,8 @@ python run_classification.py \
     --per_device_train_batch_size 32 \
     --learning_rate 2e-5 \
     --num_train_epochs 15 \
-    --output_dir /tmp/${dataset}_${subset}/ 
+    --output_dir /tmp/${dataset}_${subset}/
+    --torch_compile True
 ```
  It results in a Micro F1 score of around 0.82 without any text and label filtering. Note that you have to explictly remove the "unused" split from the dataset, since it is not used for classification.
 
@@ -174,7 +178,7 @@ then
 ```bash
 export TASK_NAME=mrpc
 
-python run_glue_no_trainer.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_glue_no_trainer.py \
   --model_name_or_path bert-base-cased \
   --task_name $TASK_NAME \
   --max_length 128 \
@@ -182,6 +186,7 @@ python run_glue_no_trainer.py \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
   --output_dir /tmp/$TASK_NAME/
+  --torch_compile True
 ```
 
 You can then use your usual launchers to run in it in a distributed environment, but the easiest way is to run
@@ -201,7 +206,7 @@ that will check everything is ready for training. Finally, you can launch traini
 ```bash
 export TASK_NAME=mrpc
 
-accelerate launch run_glue_no_trainer.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 accelerate launch run_glue_no_trainer.py \
   --model_name_or_path bert-base-cased \
   --task_name $TASK_NAME \
   --max_length 128 \
