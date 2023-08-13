@@ -198,6 +198,11 @@ def parse_args():
         action="store_true",
         help="Whether or not to enable to load a pretrained model whose head dimensions are different.",
     )
+    parser.add_argument(
+        "--torch_compile",
+        help="Whether to use torch.compile mode or not"
+    )
+
     args = parser.parse_args()
 
     # Sanity checks
@@ -335,6 +340,10 @@ def main():
         ignore_mismatched_sizes=args.ignore_mismatched_sizes,
         trust_remote_code=args.trust_remote_code,
     )
+
+    # Compile mode PT2.0
+    if args.torch_compile:
+        model = torch.compile(model)
 
     # Preprocessing the datasets
     if args.task_name is not None:
