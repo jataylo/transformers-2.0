@@ -214,6 +214,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 accelerate launch run_
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
   --output_dir /tmp/$TASK_NAME/
+  --torch_compile True
 ```
 
 This command is the same and will work for:
@@ -236,7 +237,7 @@ Based on the script [`run_xnli.py`](https://github.com/huggingface/transformers/
 This example code fine-tunes mBERT (multi-lingual BERT) on the XNLI dataset. It runs in 106 mins on a single tesla V100 16GB.
 
 ```bash
-python run_xnli.py \
+TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_xnli.py \
   --model_name_or_path bert-base-multilingual-cased \
   --language de \
   --train_language en \
@@ -248,6 +249,7 @@ python run_xnli.py \
   --max_seq_length 128 \
   --output_dir /tmp/debug_xnli/ \
   --save_steps -1
+  --torch_compile True
 ```
 
 Training with the previously defined hyper-parameters yields the following results on the **test** set:
