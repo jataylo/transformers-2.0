@@ -64,6 +64,7 @@ Seems like there may be some implicit recompilation here, and autotuned kernels 
 |-----------|-----------------------------------|------------------------|---------------|-----------------------|-------------|
 | 7900 XTX  | Regular execution                 | 4.105                  | 1283.107      | 19.364                | 21.0189
 | 7900 XTX  | compile - autotune cached         | 4.001                  | 1316.67       | 21.556                | 18.8719
+
 Autotune logs:
 ```
 AUTOTUNE addmm(472x3072, 472x1024, 1024x3072)
