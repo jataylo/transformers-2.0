@@ -39,7 +39,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_glue.py \
   --per_device_train_batch_size 32 \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
-  --output_dir /tmp/$TASK_NAME/
+  --output_dir /tmp/$TASK_NAME/ \ 
   --torch_compile True
 ```
 
@@ -77,7 +77,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1  python run_glue.py \
   --per_device_train_batch_size 32 \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
-  --output_dir /tmp/imdb/
+  --output_dir /tmp/imdb/ \
   --torch_compile True
 ```
 
@@ -106,7 +106,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1  python run_classifica
     --per_device_train_batch_size 32 \
     --learning_rate 2e-5 \
     --num_train_epochs 1 \
-    --output_dir /tmp/${dataset}_${subset}/
+    --output_dir /tmp/${dataset}_${subset}/ \
     --torch_compile True
 ```
 Training for 1 epoch results in acc of around 0.5958 for review_body only and 0.659 for title+body+category.
@@ -130,7 +130,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_classificat
     --per_device_train_batch_size 32 \
     --learning_rate 2e-5 \
     --num_train_epochs 15 \
-    --output_dir /tmp/${dataset}_${subset}/
+    --output_dir /tmp/${dataset}_${subset}/ \
     --torch_compile True
 ```
  It results in a Micro F1 score of around 0.82 without any text and label filtering. Note that you have to explictly remove the "unused" split from the dataset, since it is not used for classification.
@@ -185,7 +185,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_glue_no_tra
   --per_device_train_batch_size 32 \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
-  --output_dir /tmp/$TASK_NAME/
+  --output_dir /tmp/$TASK_NAME/ \
   --torch_compile True
 ```
 
@@ -213,7 +213,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 accelerate launch run_
   --per_device_train_batch_size 32 \
   --learning_rate 2e-5 \
   --num_train_epochs 3 \
-  --output_dir /tmp/$TASK_NAME/
+  --output_dir /tmp/$TASK_NAME/ \
   --torch_compile True
 ```
 
@@ -248,7 +248,7 @@ TORCHDYNAMO_DYNAMIC_SHAPES=1 TORCHINDUCTOR_MAX_AUTOTUNE=1 python run_xnli.py \
   --num_train_epochs 2.0 \
   --max_seq_length 128 \
   --output_dir /tmp/debug_xnli/ \
-  --save_steps -1
+  --save_steps -1 \
   --torch_compile True
 ```
 
